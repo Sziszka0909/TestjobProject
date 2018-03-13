@@ -38,7 +38,7 @@ public class TransactionServlet extends HttpServlet{
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error("Catch SQL Exception", e);
-			out.write("Sorry, our servers are temporarily down");
+			out.write("Sorry, our database servers are temporarily down.");
 		}
 	}
 	

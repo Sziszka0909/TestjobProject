@@ -61,6 +61,7 @@ public class TransferServlet extends HttpServlet{
 			out.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
+			out.write("Sorry, our database servers are temporarily down.");
 			logger.error("Catch SQL Exception", e);
 		}
 	}

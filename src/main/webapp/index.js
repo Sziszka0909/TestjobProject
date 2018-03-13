@@ -24,6 +24,10 @@ $(document).ready(function	() {
 					} else {
 						window.location.href = "bankaccount.html";
 					}
+				},
+				error: function(data) {
+					document.getElementsByClassName("errormessage")[0].innerHTML = "";
+					$(".errormessage").append("<p>" + data + "</p>");
 				}
 			})
 		}

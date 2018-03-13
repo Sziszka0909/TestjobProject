@@ -33,6 +33,10 @@ function getAccount(id){
 					$(".sourceaccount").append("<option>" + BankAccount.accountNumber + "</option>");
 				})
 			}
+		},
+		error: function(data) {
+			document.getElementsByClassName("errormessage")[0].innerHTML = "";
+			$(".errormessage").append("<p>" + data + "</p>");
 		}
 	})
 }
@@ -73,6 +77,10 @@ function choose(){
 					document.getElementsByClassName("historytable")[0].innerHTML = "";
 					$(".transactionnotyet").append("<h3>You haven't got any transaction yet.</h3>");
 				}
+			},
+			error: function(data) {
+				document.getElementsByClassName("errormessage")[0].innerHTML = "";
+				$(".errormessage").append("<p>" + data + "</p>");
 			}
 		})
 	})

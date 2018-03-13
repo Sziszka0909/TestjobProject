@@ -27,14 +27,15 @@ public class AccountHistoryServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String accountNumber = req.getParameter("accountNumber");
 		String result;
+		PrintWriter out = resp.getWriter();
 		try {
 			result = accountHistoryDBDao.getHistoryDetails(accountNumber);
-			PrintWriter out = resp.getWriter();
 			resp.setContentType("application/json");
 			out.write(result);
 			out.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			out.write("Sorry, our database servers are temporarily down.");
 			logger.error("Catch SQL Exception", e);
 		}
 	}

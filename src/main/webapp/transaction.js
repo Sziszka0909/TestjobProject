@@ -31,6 +31,10 @@ function getAllAccount(id){
 					$(".target").append("<option>" + BankAccount.accountNumber + "</option>");
 				}
 			})
+		},
+		error: function(data) {
+			document.getElementsByClassName("message")[0].innerHTML = "";
+			$(".message").append("<p>" + data + "</p>");
 		}
 	})
 }
@@ -49,6 +53,10 @@ function getAccount(id){
 			} else {
 				getAllAccount(id);
 			}
+		},
+		error: function(data) {
+			document.getElementsByClassName("message")[0].innerHTML = "";
+			$(".message").append("<p>" + data + "</p>");
 		}
 	})
 }
@@ -75,6 +83,10 @@ function transaction(){
 				datatype: "json",
 				data: { "source" : source, "target" : target, "amount" : amount },
 				success: function(data){
+					$(".message").append("<p>" + data + "</p>");
+				},
+				error: function(data) {
+					document.getElementsByClassName("message")[0].innerHTML = "";
 					$(".message").append("<p>" + data + "</p>");
 				}
 	        })

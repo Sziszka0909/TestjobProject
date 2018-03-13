@@ -30,16 +30,17 @@ public class BankAccountsServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);
 		int id = (Integer) session.getAttribute("id");
+		PrintWriter out = resp.getWriter();
 		
 		String result;
 		try {
 			result = bankAccountDBDao.getBankAccountDetails(id);
-			PrintWriter out = resp.getWriter();
 			resp.setContentType("application/json");
 			out.write(result);
 			out.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			out.write("Sorry, our database servers are temporarily down.");
 			logger.error("Catch SQL Exception", e);
 		}
 	}

@@ -17,6 +17,10 @@ $(document).ready(function	() {
 							"</td> <td>" + BankAccount.balance + "</td></tr>");
 				})
 			}
+		},
+		error: function(data) {
+			document.getElementsByClassName("errormessage")[0].innerHTML = "";
+			$(".errormessage").append("<p>" + data + "</p>");
 		}
 	})
 })

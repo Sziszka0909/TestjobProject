@@ -36,11 +36,11 @@ public class LogInServlet extends HttpServlet{
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		String result;
+		PrintWriter out = resp.getWriter();
 		try {
 			result = userDBDao.getUser(username, password);
 			Gson gson = new Gson();
 			User user = gson.fromJson(result, User.class);
-			PrintWriter out = resp.getWriter();
 			
 			
 			if(!user.getPassword().equals("")){
@@ -56,6 +56,7 @@ public class LogInServlet extends HttpServlet{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			out.write("Sorry, our database servers are temporarily down.");
 			logger.error("Catch SQL Exception", e);
 		}
 		
