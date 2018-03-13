@@ -12,12 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.codecool.finastra.dao.BankAccountDBDao;
 
 @WebServlet("/bankaccount")
 public class BankAccountsServlet extends HttpServlet{
 	
 	private BankAccountDBDao bankAccountDBDao = new BankAccountDBDao();
+	
+	final static Logger logger = Logger.getLogger(BankAccountsServlet.class);
 	
 	//From the session I get the user's Id
 	//Based on this Id get the data bankAccount table
@@ -35,8 +39,8 @@ public class BankAccountsServlet extends HttpServlet{
 			out.write(result);
 			out.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("Catch SQL Exception", e);
 		}
 	}
 

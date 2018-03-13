@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.codecool.finastra.dao.AccountHistoryDBDao;
 import com.codecool.finastra.dao.BankAccountDBDao;
 
@@ -18,6 +20,8 @@ import com.codecool.finastra.dao.BankAccountDBDao;
 public class TransferServlet extends HttpServlet{
 	
 	private BankAccountDBDao bankAccountDBDao = new BankAccountDBDao();
+	
+	final static Logger logger = Logger.getLogger(TransferServlet.class);
 	
 	//Get the details from clients side
 	//Get target and source accounts currency from db
@@ -52,10 +56,12 @@ public class TransferServlet extends HttpServlet{
 				out.close();
 			}
 		}catch (NumberFormatException e) {
+			logger.error("Catch NumberFormat Exception", e);
 			out.write("Invalid amount.");
 			out.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
+			logger.error("Catch SQL Exception", e);
 		}
 	}
 

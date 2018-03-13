@@ -16,12 +16,15 @@ import com.codecool.finastra.dao.UserDBDao;
 import com.codecool.finastra.models.User;
 import com.google.gson.Gson;
 
+import org.apache.log4j.Logger;
 import org.json.*;
 
 @WebServlet("/login")
 public class LogInServlet extends HttpServlet{
 	
 	private UserDBDao userDBDao = new UserDBDao();
+	
+	final static Logger logger = Logger.getLogger(LogInServlet.class);
 
 	//Get username and password from frontend
 	//Cast result to User object
@@ -53,6 +56,7 @@ public class LogInServlet extends HttpServlet{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			logger.error("Catch SQL Exception", e);
 		}
 		
 	}

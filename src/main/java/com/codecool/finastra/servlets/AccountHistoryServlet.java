@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.codecool.finastra.dao.AccountHistoryDBDao;
 
 @WebServlet("/accounthistory")
@@ -18,6 +20,7 @@ public class AccountHistoryServlet extends HttpServlet{
 	
 	private AccountHistoryDBDao accountHistoryDBDao = new AccountHistoryDBDao();
 	
+	final static Logger logger = Logger.getLogger(AccountHistoryServlet.class);
 	//Get the account number from request
 	//Send the history details to clients side based on account number
 	@Override
@@ -32,6 +35,7 @@ public class AccountHistoryServlet extends HttpServlet{
 			out.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			logger.error("Catch SQL Exception", e);
 		}
 	}
 
