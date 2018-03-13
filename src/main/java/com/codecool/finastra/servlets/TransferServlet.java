@@ -52,7 +52,7 @@ public class TransferServlet extends HttpServlet{
 				out.close();
 			}
 		}catch (NumberFormatException e) {
-			out.write("Amount must be integer.");
+			out.write("Invalid amount.");
 			out.close();
 		}catch (SQLException e) {
 			e.printStackTrace();

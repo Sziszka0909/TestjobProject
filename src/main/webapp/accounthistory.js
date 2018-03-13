@@ -49,6 +49,7 @@ function getAccount(id){
 function choose(){
 	$(".choose").click(function(){
 		document.getElementsByClassName("historytable")[0].innerHTML = "";
+		document.getElementsByClassName("transactionnotyet")[0].innerHTML = "";
 		var sourceAccount = $(".sourceaccount").val();
 		var numberOfAccounts = 0;
 		$.ajax({
@@ -70,7 +71,7 @@ function choose(){
 				})
 				if(numberOfAccounts == 0){
 					document.getElementsByClassName("historytable")[0].innerHTML = "";
-					$(".transactionnotyet").append("<h3>You haven't got transaction yet.</h3>");
+					$(".transactionnotyet").append("<h3>You haven't got any transaction yet.</h3>");
 				}
 			}
 		})
