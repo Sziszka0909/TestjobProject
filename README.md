@@ -33,5 +33,4 @@ mvn package
 6. Open your browser and navigate localhost:8080.
 7. Click the Manager App tab.
 8. Select your file from /target/TestjobProject-0.0.1-SNAPSHOT.war, then click Deploy.
-9. Click the next Application path: TestjobProject-0.0.1-SNAPSHOT or click this link: 
-[TestjobProject](http://localhost:8080/TestjobProject-0.0.1-SNAPSHOT/)
+9. Click the next Application path: TestjobProject-0.0.1-SNAPSHOT.
