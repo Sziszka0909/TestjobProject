@@ -31,17 +31,17 @@ public class LogInServlet extends HttpServlet{
 	//If User object's password not equal ""
 	//Create Session, set attribute id equals to user's id in db
 	//Send response to clients side
+	//Error handling and logging
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		String result;
-		PrintWriter out = resp.getWriter();
 		try {
 			result = userDBDao.getUser(username, password);
 			Gson gson = new Gson();
 			User user = gson.fromJson(result, User.class);
-			
+			PrintWriter out = resp.getWriter();
 			
 			if(!user.getPassword().equals("")){
 				JSONObject jsonObject = new JSONObject(result);
@@ -56,7 +56,7 @@ public class LogInServlet extends HttpServlet{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			out.write("Sorry, our database servers are temporarily down.");
+			resp.sendError(500);
 			logger.error("Catch SQL Exception", e);
 		}
 		

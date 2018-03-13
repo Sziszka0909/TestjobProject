@@ -19,6 +19,7 @@ function getSessionId(){
 
 //Get all account from server
 //Source and target drop down menu append the account number that belongs to session id
+//Error handling
 function getAllAccount(id){
 	$.ajax({
 		method:"GET",
@@ -32,15 +33,21 @@ function getAllAccount(id){
 				}
 			})
 		},
-		error: function(data) {
+		error: function(jqXHR, exception) {
+			var statusCode = jqXHR.status;
 			document.getElementsByClassName("message")[0].innerHTML = "";
-			$(".message").append("<p>" + data + "</p>");
+			if(statusCode == 500){
+				$(".message").append("<p>Sorry, our database servers are temporarily down.</p>");
+			} else {
+				$(".message").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+			}
 		}
 	})
 }
 //Get account based on iD from server
 //If data is empty show error message
 //Else call getAllAccount() function with id
+//Error handling
 function getAccount(id){
 	$.ajax({
 		method: "GET",
@@ -54,9 +61,14 @@ function getAccount(id){
 				getAllAccount(id);
 			}
 		},
-		error: function(data) {
+		error: function(jqXHR, exception) {
+			var statusCode = jqXHR.status;
 			document.getElementsByClassName("message")[0].innerHTML = "";
-			$(".message").append("<p>" + data + "</p>");
+			if(statusCode == 500){
+				$(".message").append("<p>Sorry, our database servers are temporarily down.</p>");
+			} else {
+				$(".message").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+			}
 		}
 	})
 }
@@ -66,6 +78,7 @@ function getAccount(id){
 //If source field equals target field show error message
 //If amount field is empty show error message
 //Else send the datas to server and show the data what I get
+//Error handling
 function transaction(){
 	$(".transaction").click(function() {
 		document.getElementsByClassName("message")[0].innerHTML = "";
@@ -85,12 +98,18 @@ function transaction(){
 				success: function(data){
 					$(".message").append("<p>" + data + "</p>");
 				},
-				error: function(data) {
+				error: function(jqXHR, exception) {
+	                var statusCode = jqXHR.status;
 					document.getElementsByClassName("message")[0].innerHTML = "";
-					$(".message").append("<p>" + data + "</p>");
+					if(statusCode == 406){
+						$(".message").append("<p>Invalid amount.</p>");
+					} else if(statusCode == 500){
+						$(".message").append("<p>Sorry, our database servers are temporarily down.</p>");
+					} else {
+						$(".message").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+					}
 				}
 	        })
 		}
 	})
 }
-

@@ -18,6 +18,7 @@ function getSessionId(){
 //Get account from server
 //If data is empty show error message
 //Else append to table the bank account details
+//Error handling
 function getAccount(id){
 	$.ajax({
 		method: "GET",
@@ -34,9 +35,14 @@ function getAccount(id){
 				})
 			}
 		},
-		error: function(data) {
+		error: function(jqXHR, exception) {
+			var statusCode = jqXHR.status;
 			document.getElementsByClassName("errormessage")[0].innerHTML = "";
-			$(".errormessage").append("<p>" + data + "</p>");
+			if(statusCode == 500){
+				$(".errormessage").append("<p>Sorry, our database servers are temporarily down.</p>");
+			} else {
+				$(".errormessage").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+			}
 		}
 	})
 }
@@ -50,6 +56,7 @@ function getAccount(id){
 //Append the account history details to table and in every iteration increase the helper
 //When the iteration is over and the helper value is 0, set history table to empty
 //And show the error message
+//Error handling
 function choose(){
 	$(".choose").click(function(){
 		document.getElementsByClassName("historytable")[0].innerHTML = "";
@@ -78,9 +85,14 @@ function choose(){
 					$(".transactionnotyet").append("<h3>You haven't got any transaction yet.</h3>");
 				}
 			},
-			error: function(data) {
+			error: function(jqXHR, exception) {
+				var statusCode = jqXHR.status;
 				document.getElementsByClassName("errormessage")[0].innerHTML = "";
-				$(".errormessage").append("<p>" + data + "</p>");
+				if(statusCode == 500){
+					$(".errormessage").append("<p>Sorry, our database servers are temporarily down.</p>");
+				} else {
+					$(".errormessage").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+				}
 			}
 		})
 	})

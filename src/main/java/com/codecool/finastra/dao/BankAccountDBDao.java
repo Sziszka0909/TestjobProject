@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 public class BankAccountDBDao {
 	
 	//Create connection with DB 'testjob' schema
-	Connection connection = ConnUtil.getConnection("testjob");
+	private Connection connection = ConnUtil.getConnection("testjob");
 	//I will add data to 'accounthistory' table so I create a new AccountHistoryDBDao instance
 	private AccountHistoryDBDao accountHIstoryDBDao = new AccountHistoryDBDao();
 	

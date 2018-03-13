@@ -30,6 +30,7 @@ public class TransferServlet extends HttpServlet{
 	//Create transfer
 	//Catch the exception if the amount us not integer
 	//Every case I send response to clients side
+	//Error handling and logging
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -57,11 +58,11 @@ public class TransferServlet extends HttpServlet{
 			}
 		}catch (NumberFormatException e) {
 			logger.error("Catch NumberFormat Exception", e);
-			out.write("Invalid amount.");
+			resp.sendError(406);
 			out.close();
 		}catch (SQLException e) {
 			e.printStackTrace();
-			out.write("Sorry, our database servers are temporarily down.");
+			resp.sendError(500);
 			logger.error("Catch SQL Exception", e);
 		}
 	}

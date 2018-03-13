@@ -23,19 +23,20 @@ public class AccountHistoryServlet extends HttpServlet{
 	final static Logger logger = Logger.getLogger(AccountHistoryServlet.class);
 	//Get the account number from request
 	//Send the history details to clients side based on account number
+	//Error handling and logging
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String accountNumber = req.getParameter("accountNumber");
 		String result;
-		PrintWriter out = resp.getWriter();
 		try {
 			result = accountHistoryDBDao.getHistoryDetails(accountNumber);
 			resp.setContentType("application/json");
+			PrintWriter out = resp.getWriter();
 			out.write(result);
 			out.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			out.write("Sorry, our database servers are temporarily down.");
+			resp.sendError(500);
 			logger.error("Catch SQL Exception", e);
 		}
 	}

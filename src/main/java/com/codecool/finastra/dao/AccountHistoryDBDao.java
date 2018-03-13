@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 public class AccountHistoryDBDao {
 	
 	//Create connection with DB 'testjob' schema
-	Connection connection = ConnUtil.getConnection("testjob");
+	private Connection connection = ConnUtil.getConnection("testjob");
 	
 	/**
 	 * description:

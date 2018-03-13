@@ -6,6 +6,7 @@ $(document).ready(function	() {
 	//Else send the password and the user name to server side
 	//Handle the data
 	//If data equal "error" set hidden field visibility to visible, else redirect to bankaccount.html
+	//Error handling
 	$(".submit").click(function() {
 		document.getElementById('hiddenfield').style.visibility = 'hidden';
 		var username = $(".username").val();
@@ -25,9 +26,14 @@ $(document).ready(function	() {
 						window.location.href = "bankaccount.html";
 					}
 				},
-				error: function(data) {
+				error: function(jqXHR, exception) {
+					var statusCode = jqXHR.status;
 					document.getElementsByClassName("errormessage")[0].innerHTML = "";
-					$(".errormessage").append("<p>" + data + "</p>");
+					if(statusCode == 500){
+						$(".errormessage").append("<p>Sorry, our database servers are temporarily down.</p>");
+					} else {
+						$(".errormessage").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+					}
 				}
 			})
 		}

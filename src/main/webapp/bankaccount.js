@@ -1,6 +1,7 @@
 //When the page is infuse, get bank account details from server
 //If data is empty, show error message
 //Else show bank account details
+//Error handling
 $(document).ready(function	() {
 	$.ajax({
 		method: "GET",
@@ -18,9 +19,14 @@ $(document).ready(function	() {
 				})
 			}
 		},
-		error: function(data) {
-			document.getElementsByClassName("errormessage")[0].innerHTML = "";
-			$(".errormessage").append("<p>" + data + "</p>");
+		error: function(jqXHR, exception) {
+			var statusCode = jqXHR.status;
+			document.getElementsByClassName("message")[0].innerHTML = "";
+			if(statusCode == 500){
+				$(".message").append("<p>Sorry, our database servers are temporarily down.</p>");
+			} else {
+				$(".message").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+			}
 		}
 	})
 })

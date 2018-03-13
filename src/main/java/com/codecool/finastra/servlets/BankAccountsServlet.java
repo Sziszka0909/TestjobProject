@@ -26,21 +26,22 @@ public class BankAccountsServlet extends HttpServlet{
 	//From the session I get the user's Id
 	//Based on this Id get the data bankAccount table
 	//Send the data to clients side
+	//Error handling and logging
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);
 		int id = (Integer) session.getAttribute("id");
-		PrintWriter out = resp.getWriter();
 		
 		String result;
 		try {
 			result = bankAccountDBDao.getBankAccountDetails(id);
 			resp.setContentType("application/json");
+			PrintWriter out = resp.getWriter();
 			out.write(result);
 			out.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			out.write("Sorry, our database servers are temporarily down.");
+			resp.sendError(500);
 			logger.error("Catch SQL Exception", e);
 		}
 	}

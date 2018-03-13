@@ -26,19 +26,20 @@ public class TransactionServlet extends HttpServlet{
 	final static Logger logger = Logger.getLogger(TransactionServlet.class);
 	
 	//Get all bank account details from db, and send this to clients side
+	//Error handling and logging
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String result;
-		PrintWriter out = resp.getWriter();
 		try {
 			result = bankAccountDBDao.getAllBankAccounts();
 			resp.setContentType("application/json");
+			PrintWriter out = resp.getWriter();
 			out.write(result);
 			out.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			logger.error("Catch SQL Exception", e);
-			out.write("Sorry, our database servers are temporarily down.");
+			resp.sendError(500);
 		}
 	}
 	
