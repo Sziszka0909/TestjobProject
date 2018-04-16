@@ -29,8 +29,8 @@ function getAllAccount(id){
 			$.each(data, function(ArrayID, BankAccount){
 				if(BankAccount.userId == Number(id)){
 					$(".source").append("<option>" + BankAccount.accountNumber + "</option>");
-					$(".target").append("<option>" + BankAccount.accountNumber + "</option>");
 				}
+				$(".target").append("<option>" + BankAccount.accountNumber + "</option>");
 			})
 		},
 		error: function(jqXHR, exception) {

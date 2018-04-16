@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.codecool.finastra.models.BankAccount;
 import com.codecool.finastra.util.ConnUtil;
@@ -164,6 +165,57 @@ public class BankAccountDBDao {
 				addTarget.close();
 			}
 		}
+	}
+	
+	public boolean availableAccountNumber(String accountNumber) throws SQLException {
+		ArrayList<String> accountNumbers = new ArrayList<>();
+    	
+    	PreparedStatement statement = connection.prepareStatement("SELECT * FROM `bankaccounts`");
+	   	ResultSet resultSet = statement.executeQuery();
+	   	while (resultSet.next()) {
+	   		String accountn = resultSet.getString(1);
+	   		accountNumbers.add(accountn);
+	   	}
+	   	
+	   	for (String anumber : accountNumbers) {
+			if (accountNumber.equals(anumber)){
+				return false;
+			}
+		}
+    	return true;
+	}
+	
+	private String generateAccountNumber() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 17; i++) {
+			if(i == 8){
+				sb.append("-");
+			} else {
+				Random random = new Random();
+				sb.append(random.nextInt(10));
+			}
+		}
+		
+		return sb.toString();
+	}
+	
+	public void addBankAccount(String currency, int userID) throws SQLException {
+		String accountNumber = generateAccountNumber();
+		while(availableAccountNumber(accountNumber) == false) {
+			accountNumber = generateAccountNumber();
+		}
+		PreparedStatement statement = connection.prepareStatement("INSERT INTO `bankaccounts` VALUES (?, ?, ?, ?)");
+		statement.setString(1, accountNumber);
+		statement.setString(2, currency);
+		statement.setInt(3, 0);
+		statement.setInt(4, userID);
+		statement.executeUpdate();
+	}
+	
+	public void deleteBankAccount(String bankAccountNumber) throws SQLException {
+		PreparedStatement statement = connection.prepareStatement("DELETE FROM `bankaccounts` WHERE `account_number`=?");
+		statement.setString(1, bankAccountNumber);
+		statement.executeUpdate();
 	}
 
 

@@ -18,7 +18,8 @@ import javax.servlet.Filter;
 //If I navigate the above pages without session, I redirected to index.html 
 @WebFilter(urlPatterns = {"/accounthistory","/bankaccount","/logout",
 		"/transactionpage","/transfer","/transaction", "/transition",
-		"/transaction.html","/accounthistory.html","/bankaccount.html"})
+		"/transaction.html","/accounthistory.html","/bankaccount.html",
+		"/generate"})
 public class SessionFilter implements Filter{
 
 	//Get session, if it null redirect to index.html

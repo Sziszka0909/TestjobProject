@@ -15,7 +15,11 @@ $(document).ready(function	() {
 				$.each(data, function(ArrayID, BankAccount){
 					$(".details").append("<tr><td>" + BankAccount.accountNumber + 
 							"</td><td> " + BankAccount.currency + 
-							"</td> <td>" + BankAccount.balance + "</td></tr>");
+							"</td><td>" + BankAccount.balance + "</td>" +
+							"<td class='lastColumn'><button type='button' " +
+							"class='btn btn-danger " + BankAccount.accountNumber + 
+							"' onclick='deleteAccountNumber(\"" + BankAccount.accountNumber + "\")'>X</button>" +
+							"</td></tr>");
 				})
 			}
 		},
@@ -29,4 +33,46 @@ $(document).ready(function	() {
 			}
 		}
 	})
+	generateAcc();
 })
+
+function generateAcc() {
+	$(".generate-button").click(function() {
+		console.log("generate clicked");
+		var currency = $(".currency").val();
+		var confirmation = confirm("Are you sure you want to generate a new account?");
+	    if (confirmation == true) {
+	    	$.ajax({
+	    		method: "GET",
+	    		url: "generate",
+	    		datatype: "json",
+	    		data: { "currency": currency },
+	    		success: function(){
+	    			window.location.reload();
+	    		},
+	    		error: function(){
+	    			$(".message").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+				}
+			})
+	    }
+	})
+}
+
+function deleteAccountNumber(id) {
+	var accountNumber = id;
+	var confirmation = confirm("Are you sure you want to delete this account?");
+	    if (confirmation == true) {
+	    	$.ajax({
+	    		method: "POST",
+	    		url: "deleteaccountnumber",
+	    		datatype: "json",
+	    		data: { "accountNumber": accountNumber },
+	    		success: function(){
+	    			window.location.reload();
+	    		},
+	    		error: function(){
+	    			$(".message").append("<p>Something went wrong. Please try again a few minutes later.</p>")
+				}
+			})
+	    }
+}

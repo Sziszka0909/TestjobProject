@@ -44,7 +44,18 @@
 }
 
 .message {
-	margin-left: 10px;
 	margin-right: 10px;
+}
+
+.reginput {
+	width: 150px;
+}
+
+.currency {
+	width: 100px !important;
+}
+
+.lastColumn {
+	width: 50px; 
 }
   

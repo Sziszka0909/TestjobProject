@@ -38,4 +38,11 @@ $(document).ready(function	() {
 			})
 		}
 	});
+	registration();
 })
+
+function registration(){
+	$(".register").click(function() {
+		window.location.href = "registration.html";
+	})
+}
