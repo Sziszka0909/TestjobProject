@@ -19,7 +19,7 @@ import javax.servlet.Filter;
 @WebFilter(urlPatterns = {"/accounthistory","/bankaccount","/logout",
 		"/transactionpage","/transfer","/transaction", "/transition",
 		"/transaction.html","/accounthistory.html","/bankaccount.html",
-		"/generate"})
+		"/generate", "/deleteaccountnumber"})
 public class SessionFilter implements Filter{
 
 	//Get session, if it null redirect to index.html
